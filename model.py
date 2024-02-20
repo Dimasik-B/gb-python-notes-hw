@@ -10,7 +10,7 @@ class Model:
         note = {}
         note['title'] = input('\nВведите заголовок: ')
         note['text'] = input('\nВведите текст заметки: ')
-        note['date'] = "{}.{}.{}".format(today.day, today.month, today.year)
+        note['date'] = today.strftime("%d.%m.%Y")
         self.notes.append(note)
 
     def find_all_by_date(self, date):

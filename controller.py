@@ -33,9 +33,9 @@ class Controller:
                 self.view.show_additional_actions()
                 self.chose_additional_action(input('\nВыберите действие: '))
             case '4':
-                print(self.model.find_all_by_date(input('\nВведите дату: ')))
-                
-            case '8':
+                notes_by_date = self.model.find_all_by_date(input('\nВведите дату: '))
+                self.view.print_all_notes(notes_by_date)
+            case '5':
                 return 'exit'
 
     def chose_additional_action(self, action):
