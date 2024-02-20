@@ -4,13 +4,13 @@ class Model:
 
     def __init__(self, notes):
         self.notes = notes
+        self.today = datetime.date.today()
 
     def add_note(self):
-        today = datetime.date.today()
         note = {}
         note['title'] = input('\nВведите заголовок: ')
         note['text'] = input('\nВведите текст заметки: ')
-        note['date'] = today.strftime("%d.%m.%Y")
+        note['date'] = self.today.strftime("%d.%m.%Y")
         self.notes.append(note)
 
     def find_all_by_date(self, date):
@@ -22,6 +22,7 @@ class Model:
     
     def edit_note(self, note_number):
         self.notes[note_number]['text'] = input('\nВведите новый текст заметки: ')
+        self.notes[note_number]['date'] = self.today.strftime("%d.%m.%Y")
 
     def delite_note(self, note_number):
         self.notes.pop(note_number)
