@@ -6,7 +6,6 @@ class Controller:
     
     def __init__(self):
         self.notes = []
-        self.note_number = 0
         self.view = view.View()
         self.model = model.Model(self.notes)
 
@@ -28,25 +27,46 @@ class Controller:
             case '2':
                 self.model.add_note()
             case '3':
-                self.note_number = int(input('\nВыберите заметку: ')) - 1
-                self.view.print_note(self.notes[self.note_number])
-                self.view.show_additional_actions()
-                self.chose_additional_action(input('\nВыберите действие: '))
+                note_number = int(input('\nВыберите заметку: ')) - 1
+                self.open_note(self.notes, note_number)
             case '4':
-                notes_by_date = self.model.find_all_by_date(input('\nВведите дату: '))
-                self.view.print_all_notes(notes_by_date)
+                 self.find_by_date()
             case '5':
                 return 'exit'
 
-    def chose_additional_action(self, action):
+    def chose_additional_action(self, action, note_number):
         match action:
             case '1':
-                self.model.edit_note(self.note_number)
+                self.model.edit_note(note_number)
             case '2':
-                self.model.delite_note(self.note_number)
+                self.model.delite_note(note_number)
             case '3':
                 return
+            
+    def open_note(self, notes, note_number):        
+        self.view.print_note(notes[note_number])
+        self.view.show_additional_actions()
+        self.chose_additional_action(input('\nВыберите действие: '), note_number)
 
+    def find_by_date(self):
+        flag = flag = 'work'
+        notes_by_date = self.model.find_all_by_date(input('\nВведите дату (ДД.ММ.ГГГГ): '))
+        if(len(notes_by_date) == 0):
+            print('\n Заметок с такой датой не найдено')
+            return
+        notes_list = []
+        for item in notes_by_date:
+            notes_list.append(item['note'])
+        self.view.print_all_notes(notes_list)
+        while (flag != 'exit'):
+            action = input('\nОткрыть заметку? (y/n): ').lower()       
+            match action:
+                case 'y':
+                    note_number = int(input('\nВыберите заметку: ')) - 1
+                    self.open_note(self.notes, notes_by_date[note_number]['index'])
+                    flag = 'exit'
+                case 'n':
+                    flag = 'exit'
 
     def read_file(self, filename):
         fields=['title', 'text', 'date']

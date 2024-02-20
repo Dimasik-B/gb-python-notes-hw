@@ -14,10 +14,13 @@ class Model:
         self.notes.append(note)
 
     def find_all_by_date(self, date):
-        temp_notes = []
+        temp_notes = []        
         for i in range(len(self.notes)):
                     if self.notes[i]['date'][:10] == date:
-                        temp_notes.append(self.notes[i])
+                        item = {}
+                        item['index'] = i
+                        item['note'] = self.notes[i]
+                        temp_notes.append(item)
         return temp_notes
     
     def edit_note(self, note_number):
