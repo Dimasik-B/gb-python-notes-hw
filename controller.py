@@ -49,7 +49,7 @@ class Controller:
         self.chose_additional_action(input('\nВыберите действие: '), note_number)
 
     def find_by_date(self):
-        flag = flag = 'work'
+        flag = 'work'
         notes_by_date = self.model.find_all_by_date(input('\nВведите дату (ДД.ММ.ГГГГ): '))
         if(len(notes_by_date) == 0):
             print('\n Заметок с такой датой не найдено')
